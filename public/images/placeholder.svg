@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1840" height="960" viewBox="0 0 1840 960">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff9a6c"/>
+      <stop offset="50%" stop-color="#ff6bcb"/>
+      <stop offset="100%" stop-color="#6c5bff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1840" height="960" fill="url(#bg)"/>
+  <circle cx="460" cy="480" r="280" fill="rgba(255,255,255,0.15)"/>
+  <circle cx="1380" cy="480" r="340" fill="rgba(255,255,255,0.12)"/>
+  <text x="920" y="500" font-family="system-ui, sans-serif" font-size="90" font-weight="700" fill="white" text-anchor="middle">Replace me</text>
+  <text x="920" y="580" font-family="system-ui, sans-serif" font-size="36" fill="rgba(255,255,255,0.85)" text-anchor="middle">swap this file in PixelCalendar/config.ts</text>
+</svg>
