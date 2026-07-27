@@ -7,7 +7,6 @@
 
 .pixel-calendar__frame {
   position: relative;
-  width: min(90vw, 900px);
   overflow: hidden;
   border: 2px solid #000;
 }

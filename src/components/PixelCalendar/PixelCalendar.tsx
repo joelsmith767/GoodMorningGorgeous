@@ -45,7 +45,13 @@ export function PixelCalendar() {
     <div className="pixel-calendar">
       <div
         className="pixel-calendar__frame"
-        style={{ aspectRatio: `${gridColumns} / ${gridRows}` }}
+        style={{
+          aspectRatio: `${gridColumns} / ${gridRows}`,
+          // Cap width by whichever is tighter: viewport width, a hard max, or
+          // 60% of viewport height translated through the aspect ratio — this
+          // keeps the frame from overflowing short/landscape phone screens.
+          width: `min(90vw, 900px, ${((gridColumns / gridRows) * 60).toFixed(2)}vh)`,
+        }}
       >
         <img src={image} alt="" className="pixel-calendar__photo" />
         <div

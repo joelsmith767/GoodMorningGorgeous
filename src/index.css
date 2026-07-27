@@ -29,6 +29,9 @@ body {
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  /* Reserves room so centered content never rises into the fixed corner
+     clocks on short/landscape viewports, regardless of overall height. */
+  padding-top: 5rem;
 }
 
 main {
