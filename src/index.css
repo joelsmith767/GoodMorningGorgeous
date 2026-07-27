@@ -37,3 +37,17 @@ main {
   justify-content: center;
   width: 100%;
 }
+
+.clock-corner {
+  position: fixed;
+  top: 1rem;
+  z-index: 10;
+}
+
+.clock-corner--left {
+  left: 1rem;
+}
+
+.clock-corner--right {
+  right: 1rem;
+}
