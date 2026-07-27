@@ -15,7 +15,7 @@ export interface PixelCalendarConfig {
 export const pixelCalendarConfig: PixelCalendarConfig = {
   startDate: '2026-08-25',
   endDate: '2027-05-27',
-  image: '/images/placeholder.svg',
+  image: '/images/reveal-photo.jpeg',
   gridColumns: 23,
   gridRows: 12,
   revealOrder: 'linear',

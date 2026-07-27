@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties } from 'react'
+import { useMemo, useState } from 'react'
 import { pixelCalendarConfig } from './config'
 import { getDaysElapsed, getTotalDays } from './dateUtils'
 import { createRevealOrder, type RevealOrder } from './revealOrder'
@@ -44,30 +44,28 @@ export function PixelCalendar() {
   return (
     <div className="pixel-calendar">
       <div
-        className="pixel-calendar__grid"
-        style={{ gridTemplateColumns: `repeat(${gridColumns}, 1fr)` }}
+        className="pixel-calendar__frame"
+        style={{ aspectRatio: `${gridColumns} / ${gridRows}` }}
       >
-        {Array.from({ length: totalPixels }, (_, index) => {
-          const row = Math.floor(index / gridColumns)
-          const col = index % gridColumns
-          const isRevealed = revealStepByCell[index] < revealedCount
+        <img src={image} alt="" className="pixel-calendar__photo" />
+        <div
+          className="pixel-calendar__grid"
+          style={{
+            gridTemplateColumns: `repeat(${gridColumns}, 1fr)`,
+            gridTemplateRows: `repeat(${gridRows}, 1fr)`,
+          }}
+        >
+          {Array.from({ length: totalPixels }, (_, index) => {
+            const isRevealed = revealStepByCell[index] < revealedCount
 
-          const style: CSSProperties = isRevealed
-            ? {
-                backgroundImage: `url(${image})`,
-                backgroundSize: `${gridColumns * 100}% ${gridRows * 100}%`,
-                backgroundPosition: `${(col / (gridColumns - 1)) * 100}% ${(row / (gridRows - 1)) * 100}%`,
-              }
-            : {}
-
-          return (
-            <div
-              key={index}
-              className={`pixel-calendar__cell ${isRevealed ? 'is-revealed' : 'is-locked'}`}
-              style={style}
-            />
-          )
-        })}
+            return (
+              <div
+                key={index}
+                className={`pixel-calendar__cell ${isRevealed ? 'is-revealed' : 'is-locked'}`}
+              />
+            )
+          })}
+        </div>
       </div>
 
       <div className="pixel-calendar__controls">
