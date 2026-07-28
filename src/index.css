@@ -68,6 +68,13 @@ main {
   transform: scale(1.05);
 }
 
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .app-loading {
   width: 100%;
   min-height: 100%;

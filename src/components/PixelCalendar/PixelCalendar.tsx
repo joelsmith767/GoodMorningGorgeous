@@ -1,78 +1,43 @@
-import { useMemo, useState } from 'react'
 import { pixelCalendarConfig } from './config'
-import { getDaysElapsed, getTotalDays } from './dateUtils'
-import { createRevealOrder, type RevealOrder } from './revealOrder'
+import { PixelGrid } from './PixelGrid'
+import type { RevealOrder } from './revealOrder'
 import './PixelCalendar.css'
 
-export function PixelCalendar() {
-  const { startDate, endDate, image, gridColumns, gridRows, randomSeed } = pixelCalendarConfig
+export interface PixelCalendarProps {
+  gridColumns: number
+  gridRows: number
+  totalPixels: number
+  revealedCount: number
+  revealStepByCell: number[]
+  revealOrderMode: RevealOrder
+  onRevealOrderModeChange: (mode: RevealOrder) => void
+  onRevealNext: () => void
+  onResetToToday: () => void
+}
 
-  const [revealOrderMode, setRevealOrderMode] = useState<RevealOrder>(
-    pixelCalendarConfig.revealOrder,
-  )
-
-  const totalPixels = useMemo(
-    () => getTotalDays(startDate, endDate),
-    [startDate, endDate],
-  )
-
-  // revealStepByCell[cellIndex] = which day (0-indexed) unlocks that cell
-  const revealStepByCell = useMemo(() => {
-    const order = createRevealOrder(totalPixels, revealOrderMode, randomSeed)
-    const steps = new Array<number>(totalPixels)
-    order.forEach((cellIndex, step) => {
-      steps[cellIndex] = step
-    })
-    return steps
-  }, [totalPixels, revealOrderMode, randomSeed])
-
-  const daysElapsedToday = useMemo(
-    () => Math.min(Math.max(getDaysElapsed(startDate), 0), totalPixels),
-    [startDate, totalPixels],
-  )
-
-  const [revealedCount, setRevealedCount] = useState(daysElapsedToday)
-
-  const revealNext = () => {
-    setRevealedCount((count) => Math.min(count + 1, totalPixels))
-  }
-
-  const resetToToday = () => {
-    setRevealedCount(daysElapsedToday)
-  }
+export function PixelCalendar({
+  gridColumns,
+  gridRows,
+  totalPixels,
+  revealedCount,
+  revealStepByCell,
+  revealOrderMode,
+  onRevealOrderModeChange,
+  onRevealNext,
+  onResetToToday,
+}: PixelCalendarProps) {
+  const { image } = pixelCalendarConfig
 
   return (
     <div className="pixel-calendar">
-      <div
-        className="pixel-calendar__frame"
-        style={{
-          aspectRatio: `${gridColumns} / ${gridRows}`,
-          // Cap width by whichever is tighter: viewport width, a hard max, or
-          // 60% of viewport height translated through the aspect ratio — this
-          // keeps the frame from overflowing short/landscape phone screens.
-          width: `min(90vw, 900px, ${((gridColumns / gridRows) * 60).toFixed(2)}vh)`,
-        }}
-      >
-        <img src={image} alt="" className="pixel-calendar__photo" />
-        <div
-          className="pixel-calendar__grid"
-          style={{
-            gridTemplateColumns: `repeat(${gridColumns}, 1fr)`,
-            gridTemplateRows: `repeat(${gridRows}, 1fr)`,
-          }}
-        >
-          {Array.from({ length: totalPixels }, (_, index) => {
-            const isRevealed = revealStepByCell[index] < revealedCount
-
-            return (
-              <div
-                key={index}
-                className={`pixel-calendar__cell ${isRevealed ? 'is-revealed' : 'is-locked'}`}
-              />
-            )
-          })}
-        </div>
-      </div>
+      <PixelGrid
+        image={image}
+        gridColumns={gridColumns}
+        gridRows={gridRows}
+        totalPixels={totalPixels}
+        revealedCount={revealedCount}
+        revealStepByCell={revealStepByCell}
+      />
 
       <div className="pixel-calendar__controls">
         <p>
@@ -82,22 +47,22 @@ export function PixelCalendar() {
           <button
             type="button"
             className={revealOrderMode === 'linear' ? 'is-active' : ''}
-            onClick={() => setRevealOrderMode('linear')}
+            onClick={() => onRevealOrderModeChange('linear')}
           >
             Linear
           </button>
           <button
             type="button"
             className={revealOrderMode === 'random' ? 'is-active' : ''}
-            onClick={() => setRevealOrderMode('random')}
+            onClick={() => onRevealOrderModeChange('random')}
           >
             Random
           </button>
         </div>
-        <button type="button" onClick={revealNext} disabled={revealedCount >= totalPixels}>
+        <button type="button" onClick={onRevealNext} disabled={revealedCount >= totalPixels}>
           Reveal next pixel (test)
         </button>
-        <button type="button" onClick={resetToToday}>
+        <button type="button" onClick={onResetToToday}>
           Reset to today
         </button>
       </div>
