@@ -55,6 +55,19 @@ main {
   right: 1rem;
 }
 
+.clock-tile-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.clock-tile-link:hover,
+.clock-tile-link:focus-visible {
+  transform: scale(1.05);
+}
+
 .app-loading {
   width: 100%;
   min-height: 100%;

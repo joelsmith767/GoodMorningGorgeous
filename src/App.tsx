@@ -1,10 +1,11 @@
+import { Routes, Route } from 'react-router-dom'
 import { useAuth } from './auth/AuthContext'
 import { Login } from './auth/Login'
-import { PixelCalendar } from './components/PixelCalendar/PixelCalendar'
-import { DigitalClock } from './components/DigitalClock/DigitalClock'
+import { Home } from './pages/Home'
+import { CityDetail } from './pages/CityDetail'
 
 function App() {
-  const { user, loading, logout } = useAuth()
+  const { user, loading } = useAuth()
 
   if (loading) {
     return <main className="app-loading" />
@@ -15,18 +16,10 @@ function App() {
   }
 
   return (
-    <main>
-      <div className="clock-corner clock-corner--left">
-        <DigitalClock timeZone="America/Vancouver" label="Vancouver" />
-      </div>
-      <div className="clock-corner clock-corner--right">
-        <DigitalClock timeZone="Europe/London" label="Glasgow" />
-      </div>
-      <button type="button" className="logout-button" onClick={logout}>
-        Sign out
-      </button>
-      <PixelCalendar />
-    </main>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/city/:cityId" element={<CityDetail />} />
+    </Routes>
   )
 }
 
