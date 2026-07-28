@@ -15,7 +15,9 @@ export interface PixelCalendarConfig {
 export const pixelCalendarConfig: PixelCalendarConfig = {
   startDate: '2026-08-25',
   endDate: '2027-05-27',
-  image: '/images/reveal-photo.jpeg',
+  // BASE_URL accounts for GitHub Pages serving the site from a subpath
+  // (e.g. /hannahs-going-away-present/) instead of the domain root.
+  image: `${import.meta.env.BASE_URL}images/reveal-photo.jpeg`,
   gridColumns: 23,
   gridRows: 12,
   revealOrder: 'linear',
