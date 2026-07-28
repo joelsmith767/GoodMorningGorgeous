@@ -26,3 +26,12 @@
 .digital-clock__label {
   font-size: 0.75rem;
 }
+
+.digital-clock--large .digital-clock__time {
+  font-size: 2.5rem;
+  padding: 0.6rem 1.1rem;
+}
+
+.digital-clock--large .digital-clock__label {
+  font-size: 1.15rem;
+}

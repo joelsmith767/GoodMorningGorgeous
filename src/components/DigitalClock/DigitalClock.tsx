@@ -5,13 +5,14 @@ import './DigitalClock.css'
 export interface DigitalClockProps {
   timeZone: string
   label: string
+  size?: 'small' | 'large'
 }
 
 function pad(value: number): string {
   return value.toString().padStart(2, '0')
 }
 
-export function DigitalClock({ timeZone, label }: DigitalClockProps) {
+export function DigitalClock({ timeZone, label, size = 'small' }: DigitalClockProps) {
   const [now, setNow] = useState(() => new Date())
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export function DigitalClock({ timeZone, label }: DigitalClockProps) {
   const { hours, minutes, seconds } = getTimeInZone(timeZone, now)
 
   return (
-    <div className="digital-clock">
+    <div className={`digital-clock digital-clock--${size}`}>
       <span className="digital-clock__time">
         {pad(hours)}:{pad(minutes)}:{pad(seconds)}
       </span>
