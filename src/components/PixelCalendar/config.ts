@@ -20,6 +20,6 @@ export const pixelCalendarConfig: PixelCalendarConfig = {
   image: `${import.meta.env.BASE_URL}images/reveal-photo.jpeg`,
   gridColumns: 23,
   gridRows: 12,
-  revealOrder: 'linear',
+  revealOrder: 'random',
   randomSeed: 276,
 }

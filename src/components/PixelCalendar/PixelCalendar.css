@@ -27,28 +27,3 @@
   opacity: 0.5;
   cursor: default;
 }
-
-.pixel-calendar__order-toggle {
-  display: flex;
-  border: 1px solid #888;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.pixel-calendar__order-toggle button {
-  font-family: inherit;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-right: 1px solid #888;
-  background: transparent;
-  cursor: pointer;
-}
-
-.pixel-calendar__order-toggle button:last-child {
-  border-right: none;
-}
-
-.pixel-calendar__order-toggle button.is-active {
-  background: #888;
-  color: #fff;
-}

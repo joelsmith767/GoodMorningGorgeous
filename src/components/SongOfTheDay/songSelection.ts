@@ -1,12 +1,14 @@
 import { createSeededOrder } from '../../lib/seededShuffle'
+import { getDayKeyInZone } from '../../lib/dayKey'
+import { REVEAL_RESET_TIME_ZONE } from '../DailyReveal/dailyRevealConfig'
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000
 
-// Independent of the pixel calendar's date range — the song plays every day,
-// not gated behind the reveal start date.
+// Keyed off Vancouver's calendar day (same reference clock as the pixel
+// reveal gate) so it's the same song for both accounts, not per-viewer.
 export function getDayIndex(date: Date = new Date()): number {
-  const localMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate())
-  return Math.floor(localMidnight.getTime() / MS_PER_DAY)
+  const dayKey = getDayKeyInZone(REVEAL_RESET_TIME_ZONE, date)
+  return Math.floor(new Date(`${dayKey}T00:00:00`).getTime() / MS_PER_DAY)
 }
 
 // Change this to reshuffle the rotation (e.g. after a big catalog update).
