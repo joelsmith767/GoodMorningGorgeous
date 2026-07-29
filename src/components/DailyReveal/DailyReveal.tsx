@@ -18,8 +18,9 @@ export interface DailyRevealProps {
   onRevealNext: () => void
 }
 
-// How long the unravel animation plays before the pixel actually locks in as
-// revealed and the modal closes. Keep in sync with the CSS animation duration.
+// How long the unravel animation plays before the pixel locks in as revealed
+// and the modal returns to the choice screen. Keep in sync with the CSS
+// animation duration.
 const UNRAVEL_DURATION_MS = 900
 
 export function DailyReveal({
@@ -62,7 +63,10 @@ export function DailyReveal({
     setRevealingCellIndex(nextCellIndex)
     window.setTimeout(() => {
       onRevealNext()
-      close()
+      setRevealingCellIndex(null)
+      // Back to the choice screen (not closed) — so song of the day is
+      // still reachable after revealing, instead of the whole thing ending.
+      setView('choice')
     }, UNRAVEL_DURATION_MS)
   }
 
@@ -110,7 +114,18 @@ export function DailyReveal({
               />
             )}
 
-            {view === 'song' && <SongOfTheDay />}
+            {view === 'song' && (
+              <div className="daily-reveal-modal__song">
+                <button
+                  type="button"
+                  className="daily-reveal-modal__back"
+                  onClick={() => setView('choice')}
+                >
+                  ← Back
+                </button>
+                <SongOfTheDay />
+              </div>
+            )}
           </div>
         </div>
       )}

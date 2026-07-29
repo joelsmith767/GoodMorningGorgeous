@@ -3,7 +3,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../../firebase/config'
 import { pixelCalendarConfig } from './config'
 import { getTotalDays } from './dateUtils'
-import { createRevealOrder, type RevealOrder } from './revealOrder'
+import { createRevealOrder } from './revealOrder'
 import { getDaysElapsedInZone } from '../../lib/dayKey'
 import { REVEAL_RESET_TIME_ZONE, TEST_START_DATE } from '../DailyReveal/dailyRevealConfig'
 
@@ -17,16 +17,13 @@ const sharedStateDoc = doc(db, 'sharedState', 'pixelReveal')
  * automatically from the date on every load.
  */
 export function usePixelReveal() {
-  const { endDate, gridColumns, gridRows, randomSeed } = pixelCalendarConfig
+  const { endDate, gridColumns, gridRows, revealOrder: revealOrderMode, randomSeed } =
+    pixelCalendarConfig
   const effectiveStartDate = TEST_START_DATE ?? pixelCalendarConfig.startDate
 
   const totalPixels = useMemo(
     () => getTotalDays(pixelCalendarConfig.startDate, endDate),
     [endDate],
-  )
-
-  const [revealOrderMode, setRevealOrderMode] = useState<RevealOrder>(
-    pixelCalendarConfig.revealOrder,
   )
 
   // revealOrder[step] = cell index revealed at that step; revealStepByCell is the inverse.
@@ -84,8 +81,6 @@ export function usePixelReveal() {
     totalPixels,
     revealedCount,
     revealStepByCell,
-    revealOrderMode,
-    setRevealOrderMode,
     revealNext,
     resetToToday,
     nextCellIndex,

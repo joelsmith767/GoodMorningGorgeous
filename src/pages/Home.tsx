@@ -35,8 +35,6 @@ export function Home() {
           totalPixels={pixelReveal.totalPixels}
           revealedCount={pixelReveal.revealedCount}
           revealStepByCell={pixelReveal.revealStepByCell}
-          revealOrderMode={pixelReveal.revealOrderMode}
-          onRevealOrderModeChange={pixelReveal.setRevealOrderMode}
           onRevealNext={pixelReveal.revealNext}
           onResetToToday={pixelReveal.resetToToday}
         />
