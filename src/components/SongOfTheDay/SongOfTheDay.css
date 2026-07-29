@@ -1,5 +1,30 @@
 .song-of-the-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   width: min(90vw, 360px);
+}
+
+.song-of-the-day__thumbnail {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  /* Its own reveal, independent of the Spotify embed (which we can't style
+     or animate — it's a cross-origin iframe). Easy to swap later. */
+  animation: song-thumbnail-reveal 0.8s ease-out;
+}
+
+@keyframes song-thumbnail-reveal {
+  from {
+    clip-path: circle(0% at 50% 50%);
+    opacity: 0;
+  }
+  to {
+    clip-path: circle(75% at 50% 50%);
+    opacity: 1;
+  }
 }
 
 .song-of-the-day__embed {

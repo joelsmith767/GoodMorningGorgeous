@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PixelGrid } from '../PixelCalendar/PixelGrid'
 import { SongOfTheDay } from '../SongOfTheDay/SongOfTheDay'
 import './DailyReveal.css'
@@ -13,6 +13,8 @@ export interface DailyRevealProps {
   revealedCount: number
   revealStepByCell: number[]
   nextCellIndex: number | null
+  hasPendingReveal: boolean
+  loading: boolean
   onRevealNext: () => void
 }
 
@@ -28,10 +30,22 @@ export function DailyReveal({
   revealedCount,
   revealStepByCell,
   nextCellIndex,
+  hasPendingReveal,
+  loading,
   onRevealNext,
 }: DailyRevealProps) {
   const [view, setView] = useState<ModalView>('closed')
   const [revealingCellIndex, setRevealingCellIndex] = useState<number | null>(null)
+  const hasAutoOpenedRef = useRef(false)
+
+  // Auto-open once per page load when there's a pixel waiting — but don't
+  // nag again this session if it's closed without revealing.
+  useEffect(() => {
+    if (!loading && hasPendingReveal && !hasAutoOpenedRef.current) {
+      hasAutoOpenedRef.current = true
+      setView('choice')
+    }
+  }, [loading, hasPendingReveal])
 
   const open = () => setView('choice')
 
@@ -55,7 +69,7 @@ export function DailyReveal({
   return (
     <>
       <button type="button" className="daily-reveal-trigger" onClick={open}>
-        Today
+        Open Today
       </button>
 
       {view !== 'closed' && (

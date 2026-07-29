@@ -4,12 +4,14 @@ import { PixelCalendar } from '../components/PixelCalendar/PixelCalendar'
 import { usePixelReveal } from '../components/PixelCalendar/usePixelReveal'
 import { pixelCalendarConfig } from '../components/PixelCalendar/config'
 import { DailyReveal } from '../components/DailyReveal/DailyReveal'
+import { REVEALER_EMAIL } from '../components/DailyReveal/dailyRevealConfig'
 import { DigitalClock } from '../components/DigitalClock/DigitalClock'
 import { cities } from '../cities'
 
 export function Home() {
-  const { logout } = useAuth()
+  const { user, logout } = useAuth()
   const pixelReveal = usePixelReveal()
+  const isRevealer = user?.email === REVEALER_EMAIL
 
   return (
     <main>
@@ -39,16 +41,20 @@ export function Home() {
           onResetToToday={pixelReveal.resetToToday}
         />
 
-        <DailyReveal
-          image={pixelCalendarConfig.image}
-          gridColumns={pixelReveal.gridColumns}
-          gridRows={pixelReveal.gridRows}
-          totalPixels={pixelReveal.totalPixels}
-          revealedCount={pixelReveal.revealedCount}
-          revealStepByCell={pixelReveal.revealStepByCell}
-          nextCellIndex={pixelReveal.nextCellIndex}
-          onRevealNext={pixelReveal.revealNext}
-        />
+        {isRevealer && (
+          <DailyReveal
+            image={pixelCalendarConfig.image}
+            gridColumns={pixelReveal.gridColumns}
+            gridRows={pixelReveal.gridRows}
+            totalPixels={pixelReveal.totalPixels}
+            revealedCount={pixelReveal.revealedCount}
+            revealStepByCell={pixelReveal.revealStepByCell}
+            nextCellIndex={pixelReveal.nextCellIndex}
+            hasPendingReveal={pixelReveal.hasPendingReveal}
+            loading={pixelReveal.loading}
+            onRevealNext={pixelReveal.revealNext}
+          />
+        )}
       </div>
     </main>
   )
