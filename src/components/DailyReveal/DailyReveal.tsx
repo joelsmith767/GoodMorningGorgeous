@@ -56,7 +56,7 @@ export function DailyReveal({
   }
 
   const handleReveal = () => {
-    if (nextCellIndex === null) {
+    if (nextCellIndex === null || !hasPendingReveal) {
       return
     }
     setView('revealing')
@@ -92,7 +92,12 @@ export function DailyReveal({
 
             {view === 'choice' && (
               <div className="daily-reveal-modal__choice">
-                <button type="button" onClick={handleReveal} disabled={nextCellIndex === null}>
+                <button
+                  type="button"
+                  className={hasPendingReveal ? '' : 'is-done'}
+                  onClick={handleReveal}
+                  disabled={!hasPendingReveal}
+                >
                   Reveal pixel
                 </button>
                 <button type="button" onClick={() => setView('song')}>
