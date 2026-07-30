@@ -7,12 +7,14 @@ import './SongOfTheDay.css'
 export function SongOfTheDay() {
   const trackId = pickSongOfTheDay(songCatalog, getDayIndex())
   const [thumbnail, setThumbnail] = useState<SpotifyOEmbedData | null>(null)
+  const [showEmbed, setShowEmbed] = useState(false)
 
   useEffect(() => {
     if (!trackId) {
       return
     }
     let cancelled = false
+    setShowEmbed(false)
     fetchSpotifyOEmbed(trackId).then((data) => {
       if (!cancelled) {
         setThumbnail(data)
@@ -35,17 +37,20 @@ export function SongOfTheDay() {
           src={thumbnail.thumbnailUrl}
           alt={thumbnail.title}
           className="song-of-the-day__thumbnail"
+          onAnimationEnd={() => setShowEmbed(true)}
         />
       )}
-      <iframe
-        title="Song of the day"
-        className="song-of-the-day__embed"
-        src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator`}
-        width="100%"
-        height="152"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-      />
+      {showEmbed && (
+        <iframe
+          title="Song of the day"
+          className="song-of-the-day__embed"
+          src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator&autoplay=1`}
+          width="100%"
+          height="152"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+        />
+      )}
     </div>
   )
 }
