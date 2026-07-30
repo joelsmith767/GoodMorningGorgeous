@@ -44,7 +44,7 @@ export function SongOfTheDay() {
         <iframe
           title="Song of the day"
           className="song-of-the-day__embed"
-          src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator`}
+          src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator&autoplay=1`}
           width="100%"
           height="152"
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"

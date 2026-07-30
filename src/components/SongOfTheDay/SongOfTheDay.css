@@ -4,6 +4,9 @@
   align-items: center;
   gap: 1rem;
   width: min(90vw, 360px);
+  /* Reserves room for the thumbnail (200px) + gap (1rem) + embed (152px) up
+     front, so the panel doesn't resize as each piece appears in sequence. */
+  min-height: calc(200px + 1rem + 152px);
 }
 
 .song-of-the-day__thumbnail {
