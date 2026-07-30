@@ -97,6 +97,10 @@
   cursor: default;
 }
 
+.daily-reveal-modal__choice button.is-done {
+  text-decoration: line-through;
+}
+
 .daily-reveal-modal__song {
   display: flex;
   flex-direction: column;
