@@ -12,8 +12,9 @@
   object-fit: cover;
   border-radius: 12px;
   /* Its own reveal, independent of the Spotify embed (which we can't style
-     or animate — it's a cross-origin iframe). Easy to swap later. */
-  animation: song-thumbnail-reveal 0.8s ease-out;
+     or animate — it's a cross-origin iframe). Easy to swap later. The embed
+     below only renders once this animation ends (see onAnimationEnd). */
+  animation: song-thumbnail-reveal 1.8s ease-out;
 }
 
 @keyframes song-thumbnail-reveal {
@@ -30,6 +31,16 @@
 .song-of-the-day__embed {
   border-radius: 12px;
   border: none;
+  animation: song-embed-fade-in 0.4s ease-out;
+}
+
+@keyframes song-embed-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .song-of-the-day__empty {
