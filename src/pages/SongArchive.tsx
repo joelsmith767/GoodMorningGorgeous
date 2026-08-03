@@ -65,8 +65,7 @@ export function SongArchive() {
   )
   const spotify = useSpotifySync(isJoel, trackIds)
 
-  const showConnectPrompt = isJoel && !spotify.connected
-  const showEmptyMessage = !spotify.playlistUrl && !showConnectPrompt
+  const showEmptyMessage = !isJoel && !spotify.playlistUrl
 
   return (
     <main className="song-archive">
@@ -86,9 +85,9 @@ export function SongArchive() {
         </a>
       )}
 
-      {showConnectPrompt && (
+      {isJoel && (
         <button type="button" className="song-archive__connect" onClick={spotify.connect}>
-          Connect Spotify to auto-sync this playlist
+          {spotify.connected ? 'Reconnect Spotify' : 'Connect Spotify to auto-sync this playlist'}
         </button>
       )}
 
