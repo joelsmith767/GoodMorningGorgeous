@@ -75,6 +75,14 @@ main {
   gap: 1.5rem;
 }
 
+.city-distance {
+  margin: 0;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  text-align: center;
+}
+
 .app-loading {
   width: 100%;
   min-height: 100%;
