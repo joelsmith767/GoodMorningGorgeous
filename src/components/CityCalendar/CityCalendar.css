@@ -73,7 +73,8 @@
 
 .city-calendar__cell.is-today {
   font-weight: bold;
-  text-decoration: underline;
+  background: rgba(74, 144, 217, 0.2);
+  border-color: rgba(74, 144, 217, 0.7);
 }
 
 .city-calendar__cell.is-selected {

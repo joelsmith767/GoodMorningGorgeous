@@ -23,6 +23,8 @@ export function CityCalendar({ owner, ownerLabel, canEdit, timeZone }: CityCalen
   const [selectedDayKey, setSelectedDayKey] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
   const [saving, setSaving] = useState(false)
+  const [hasSavedEntry, setHasSavedEntry] = useState(false)
+  const [justSaved, setJustSaved] = useState(false)
 
   const cells = useMemo(() => getMonthCells(viewYear, viewMonth), [viewYear, viewMonth])
 
@@ -36,19 +38,30 @@ export function CityCalendar({ owner, ownerLabel, canEdit, timeZone }: CityCalen
   const selectDay = (dayKey: string) => {
     setSelectedDayKey(dayKey)
     setDraft(entries[dayKey] ?? '')
+    setHasSavedEntry(Boolean(entries[dayKey]))
+    setJustSaved(false)
   }
 
   const closeEntry = () => setSelectedDayKey(null)
+
+  const handleDraftChange = (value: string) => {
+    setDraft(value)
+    setJustSaved(false)
+  }
 
   const handleSave = async () => {
     if (!selectedDayKey) return
     setSaving(true)
     try {
       await saveEntry(selectedDayKey, draft)
+      setHasSavedEntry(Boolean(draft.trim()))
+      setJustSaved(true)
     } finally {
       setSaving(false)
     }
   }
+
+  const saveLabel = saving ? 'Saving…' : justSaved ? 'Saved' : hasSavedEntry ? 'Edit' : 'Save'
 
   return (
     <div className="city-calendar">
@@ -104,7 +117,7 @@ export function CityCalendar({ owner, ownerLabel, canEdit, timeZone }: CityCalen
           {canEdit ? (
             <textarea
               value={draft}
-              onChange={(event) => setDraft(event.target.value)}
+              onChange={(event) => handleDraftChange(event.target.value)}
               placeholder="What's happening this day?"
               rows={5}
               disabled={loading}
@@ -117,7 +130,7 @@ export function CityCalendar({ owner, ownerLabel, canEdit, timeZone }: CityCalen
           <div className="city-calendar__entry-actions">
             {canEdit && (
               <button type="button" onClick={handleSave} disabled={saving || loading}>
-                {saving ? 'Saving…' : 'Save'}
+                {saveLabel}
               </button>
             )}
             <button type="button" onClick={closeEntry}>
