@@ -1,0 +1,129 @@
+.city-calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: min(90vw, 320px);
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+.city-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1rem;
+}
+
+.city-calendar__header button {
+  font-family: inherit;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #888;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.city-calendar__owner {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.city-calendar__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.city-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.city-calendar__cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.city-calendar__cell--blank {
+  cursor: default;
+}
+
+.city-calendar__cell.has-entry {
+  border-color: #888;
+}
+
+.city-calendar__cell.is-today {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.city-calendar__cell.is-selected {
+  background: rgba(128, 128, 128, 0.25);
+}
+
+.city-calendar__entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.city-calendar__entry textarea {
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 4px;
+  border: 1px solid #888;
+  background: transparent;
+  color: inherit;
+  resize: vertical;
+}
+
+.city-calendar__entry-text {
+  margin: 0;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  border: 1px solid #888;
+  border-radius: 4px;
+  padding: 0.5rem 0.65rem;
+}
+
+.city-calendar__entry-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.city-calendar__entry-actions button {
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 4px;
+  border: 1px solid #888;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.city-calendar__entry-actions button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
