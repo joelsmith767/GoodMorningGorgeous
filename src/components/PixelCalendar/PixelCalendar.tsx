@@ -36,7 +36,7 @@ export function PixelCalendar({
 
       <div className="pixel-calendar__controls">
         <p>
-          {revealedCount} / {totalPixels} days revealed
+          {revealedCount} / {totalPixels} days revealed · {Math.round((revealedCount / totalPixels) * 100)}%
         </p>
         <button type="button" onClick={onRevealNext} disabled={revealedCount >= totalPixels}>
           Reveal next pixel (test)

@@ -75,12 +75,38 @@ main {
   gap: 1.5rem;
 }
 
-.city-distance {
+.home-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.home-stat-line {
   margin: 0;
   font-family: ui-monospace, Consolas, monospace;
   font-size: 0.85rem;
   opacity: 0.7;
   text-align: center;
+}
+
+.reveal-status {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  text-align: center;
+}
+
+.song-archive-link {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.85rem;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+.song-archive-link:hover {
+  opacity: 1;
 }
 
 .app-loading {

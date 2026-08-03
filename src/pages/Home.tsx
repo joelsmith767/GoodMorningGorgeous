@@ -4,9 +4,10 @@ import { PixelCalendar } from '../components/PixelCalendar/PixelCalendar'
 import { usePixelReveal } from '../components/PixelCalendar/usePixelReveal'
 import { pixelCalendarConfig } from '../components/PixelCalendar/config'
 import { DailyReveal } from '../components/DailyReveal/DailyReveal'
-import { REVEALER_EMAIL } from '../components/DailyReveal/dailyRevealConfig'
+import { REVEALER_EMAIL, REVEAL_RESET_TIME_ZONE } from '../components/DailyReveal/dailyRevealConfig'
 import { DigitalClock } from '../components/DigitalClock/DigitalClock'
 import { getDistanceKm, estimateFlightHours } from '../lib/greatCircle'
+import { getDaysUntilInZone } from '../lib/dayKey'
 import { cities } from '../cities'
 
 export function Home() {
@@ -17,6 +18,7 @@ export function Home() {
   const [cityA, cityB] = cities
   const distanceKm = Math.round(getDistanceKm(cityA, cityB))
   const flightHours = Math.round(estimateFlightHours(distanceKm))
+  const daysUntilReunion = getDaysUntilInZone(pixelCalendarConfig.endDate, REVEAL_RESET_TIME_ZONE)
 
   return (
     <main>
@@ -34,9 +36,12 @@ export function Home() {
       </button>
 
       <div className="home-content">
-        <p className="city-distance">
-          {cityA.label} ✈ {cityB.label} · {distanceKm.toLocaleString()} km · ~{flightHours}h flight
-        </p>
+        <div className="home-stats">
+          <p className="home-stat-line">{daysUntilReunion} days until we're back together</p>
+          <p className="home-stat-line">
+            {cityA.label} ✈ {cityB.label} · {distanceKm.toLocaleString()} km · ~{flightHours}h flight
+          </p>
+        </div>
 
         <PixelCalendar
           gridColumns={pixelReveal.gridColumns}
@@ -48,7 +53,7 @@ export function Home() {
           onResetToToday={pixelReveal.resetToToday}
         />
 
-        {isRevealer && (
+        {isRevealer ? (
           <DailyReveal
             image={pixelCalendarConfig.image}
             gridColumns={pixelReveal.gridColumns}
@@ -61,7 +66,19 @@ export function Home() {
             loading={pixelReveal.loading}
             onRevealNext={pixelReveal.revealNext}
           />
+        ) : (
+          !pixelReveal.loading && (
+            <p className="reveal-status">
+              {pixelReveal.hasPendingReveal
+                ? "Hannah hasn't revealed today's pixel yet"
+                : "Hannah's already revealed today's pixel"}
+            </p>
+          )
         )}
+
+        <Link to="/songs" className="song-archive-link">
+          Past songs →
+        </Link>
       </div>
     </main>
   )

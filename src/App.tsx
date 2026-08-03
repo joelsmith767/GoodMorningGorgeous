@@ -3,6 +3,7 @@ import { useAuth } from './auth/AuthContext'
 import { Login } from './auth/Login'
 import { Home } from './pages/Home'
 import { CityDetail } from './pages/CityDetail'
+import { SongArchive } from './pages/SongArchive'
 
 function App() {
   const { user, loading } = useAuth()
@@ -19,6 +20,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/city/:cityId" element={<CityDetail />} />
+      <Route path="/songs" element={<SongArchive />} />
     </Routes>
   )
 }
