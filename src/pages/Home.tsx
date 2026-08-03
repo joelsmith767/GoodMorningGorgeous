@@ -75,10 +75,6 @@ export function Home() {
             </p>
           )
         )}
-
-        <Link to="/songs" className="song-archive-link">
-          Past songs →
-        </Link>
       </div>
     </main>
   )

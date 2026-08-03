@@ -97,17 +97,6 @@ main {
   text-align: center;
 }
 
-.song-archive-link {
-  font-family: ui-monospace, Consolas, monospace;
-  font-size: 0.85rem;
-  color: inherit;
-  text-decoration: none;
-  opacity: 0.7;
-}
-
-.song-archive-link:hover {
-  opacity: 1;
-}
 
 .app-loading {
   width: 100%;
