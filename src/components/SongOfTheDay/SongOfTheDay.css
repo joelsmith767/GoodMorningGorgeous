@@ -47,6 +47,6 @@
 }
 
 .song-of-the-day__empty {
-  font-family: ui-monospace, Consolas, monospace;
-  opacity: 0.7;
+  font-family: var(--font-mono);
+  color: var(--muted);
 }

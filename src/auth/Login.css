@@ -11,14 +11,20 @@
   gap: 1rem;
   width: min(90vw, 320px);
   padding: 2rem;
-  border: 1px solid #888;
+  border: 1px solid var(--line);
   border-radius: 8px;
+  background: var(--panel);
+  font-family: var(--font-mono);
 }
 
 .login__form h1 {
   margin: 0 0 0.5rem;
-  font-size: 1.25rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   text-align: center;
+  color: var(--muted);
 }
 
 .login__field {
@@ -26,6 +32,7 @@
   flex-direction: column;
   gap: 0.35rem;
   font-size: 0.9rem;
+  color: var(--muted);
 }
 
 .login__field input {
@@ -33,24 +40,27 @@
   font-size: 1rem;
   padding: 0.5rem 0.65rem;
   border-radius: 4px;
-  border: 1px solid #888;
-  background: transparent;
-  color: inherit;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
 }
 
 .login__error {
   margin: 0;
-  color: #c0392b;
+  color: #e2665a;
   font-size: 0.85rem;
 }
 
 .login__form button {
-  font-family: inherit;
-  font-size: 1rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   padding: 0.6rem 1rem;
   border-radius: 4px;
-  border: 1px solid #888;
+  border: 1px solid var(--accent);
   background: transparent;
+  color: var(--accent);
   cursor: pointer;
 }
 

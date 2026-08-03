@@ -4,7 +4,7 @@
   align-items: center;
   gap: 0.75rem;
   width: min(90vw, 320px);
-  font-family: ui-monospace, Consolas, monospace;
+  font-family: var(--font-mono);
 }
 
 .city-calendar__header {
@@ -21,16 +21,16 @@
   line-height: 1;
   padding: 0.25rem 0.6rem;
   border-radius: 4px;
-  border: 1px solid #888;
+  border: 1px solid var(--line);
   background: transparent;
-  color: inherit;
+  color: var(--ink);
   cursor: pointer;
 }
 
 .city-calendar__owner {
   margin: 0;
   font-size: 0.85rem;
-  opacity: 0.7;
+  color: var(--muted);
 }
 
 .city-calendar__weekdays {
@@ -39,7 +39,7 @@
   width: 100%;
   text-align: center;
   font-size: 0.75rem;
-  opacity: 0.6;
+  color: var(--muted);
 }
 
 .city-calendar__grid {
@@ -59,7 +59,7 @@
   border-radius: 4px;
   border: 1px solid transparent;
   background: transparent;
-  color: inherit;
+  color: var(--ink);
   cursor: pointer;
 }
 
@@ -68,17 +68,18 @@
 }
 
 .city-calendar__cell.has-entry {
-  border-color: #888;
+  border-color: var(--line);
 }
 
 .city-calendar__cell.is-today {
   font-weight: bold;
-  background: rgba(74, 144, 217, 0.2);
-  border-color: rgba(74, 144, 217, 0.7);
+  background: rgba(226, 161, 61, 0.16);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .city-calendar__cell.is-selected {
-  background: rgba(128, 128, 128, 0.25);
+  background: var(--panel-2);
 }
 
 .city-calendar__entry {
@@ -93,9 +94,9 @@
   font-size: 0.9rem;
   padding: 0.5rem 0.65rem;
   border-radius: 4px;
-  border: 1px solid #888;
-  background: transparent;
-  color: inherit;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
   resize: vertical;
 }
 
@@ -105,9 +106,10 @@
   word-break: break-word;
   font-size: 0.9rem;
   white-space: pre-wrap;
-  border: 1px solid #888;
+  border: 1px solid var(--line);
   border-radius: 4px;
   padding: 0.5rem 0.65rem;
+  background: var(--panel);
 }
 
 .city-calendar__entry-actions {
@@ -120,9 +122,9 @@
   font-size: 0.9rem;
   padding: 0.4rem 0.9rem;
   border-radius: 4px;
-  border: 1px solid #888;
-  background: transparent;
-  color: inherit;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--ink);
   cursor: pointer;
 }
 
@@ -134,5 +136,5 @@
 .city-calendar__saved-note {
   align-self: center;
   font-size: 0.85rem;
-  opacity: 0.7;
+  color: var(--muted);
 }

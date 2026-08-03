@@ -37,10 +37,17 @@ export function Home() {
 
       <div className="home-content">
         <div className="home-stats">
-          <p className="home-stat-line">{daysUntilReunion} days until we're back together</p>
-          <p className="home-stat-line">
-            {cityA.label} ✈ {cityB.label} · {distanceKm.toLocaleString()} km · ~{flightHours}h flight
-          </p>
+          <div className="home-stats__countdown">
+            <p className="home-stats__label">Days until reunion</p>
+            <p className="home-stats__count">{daysUntilReunion}</p>
+          </div>
+          <div className="home-stats__route">
+            <span className="home-stats__route-to">
+              {cityA.label} → {cityB.label}
+            </span>
+            <span className="home-stats__route-mid">{distanceKm.toLocaleString()} km</span>
+            <span className="home-stats__route-dur">~{flightHours}h</span>
+          </div>
         </div>
 
         <PixelCalendar
@@ -49,6 +56,8 @@ export function Home() {
           totalPixels={pixelReveal.totalPixels}
           revealedCount={pixelReveal.revealedCount}
           revealStepByCell={pixelReveal.revealStepByCell}
+          onRevealNext={!isRevealer ? pixelReveal.revealNext : undefined}
+          onResetToToday={!isRevealer ? pixelReveal.resetToToday : undefined}
         />
 
         {isRevealer ? (
