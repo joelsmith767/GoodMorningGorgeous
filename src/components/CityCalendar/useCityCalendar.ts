@@ -15,11 +15,17 @@ export function useCityCalendar(owner: CalendarOwner) {
   useEffect(() => {
     let cancelled = false
     setLoading(true)
-    getDoc(docRef).then((snapshot) => {
-      if (cancelled) return
-      setEntries(snapshot.exists() ? (snapshot.data().entries ?? {}) : {})
-      setLoading(false)
-    })
+    getDoc(docRef)
+      .then((snapshot) => {
+        if (cancelled) return
+        setEntries(snapshot.exists() ? (snapshot.data().entries ?? {}) : {})
+      })
+      .catch(() => {
+        // Leave entries empty; still stop loading so the UI doesn't stay stuck.
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
     return () => {
       cancelled = true
     }
