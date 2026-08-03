@@ -130,3 +130,9 @@
   opacity: 0.6;
   cursor: default;
 }
+
+.city-calendar__saved-note {
+  align-self: center;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
