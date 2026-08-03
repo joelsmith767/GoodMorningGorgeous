@@ -6,12 +6,17 @@ import { pixelCalendarConfig } from '../components/PixelCalendar/config'
 import { DailyReveal } from '../components/DailyReveal/DailyReveal'
 import { REVEALER_EMAIL } from '../components/DailyReveal/dailyRevealConfig'
 import { DigitalClock } from '../components/DigitalClock/DigitalClock'
+import { getDistanceKm, estimateFlightHours } from '../lib/greatCircle'
 import { cities } from '../cities'
 
 export function Home() {
   const { user, logout } = useAuth()
   const pixelReveal = usePixelReveal()
   const isRevealer = user?.email === REVEALER_EMAIL
+
+  const [cityA, cityB] = cities
+  const distanceKm = Math.round(getDistanceKm(cityA, cityB))
+  const flightHours = Math.round(estimateFlightHours(distanceKm))
 
   return (
     <main>
@@ -29,6 +34,10 @@ export function Home() {
       </button>
 
       <div className="home-content">
+        <p className="city-distance">
+          {cityA.label} ✈ {cityB.label} · {distanceKm.toLocaleString()} km · ~{flightHours}h flight
+        </p>
+
         <PixelCalendar
           gridColumns={pixelReveal.gridColumns}
           gridRows={pixelReveal.gridRows}
