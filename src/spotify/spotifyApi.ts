@@ -11,7 +11,8 @@ async function spotifyFetch<T>(url: string, accessToken: string, init?: RequestI
     },
   })
   if (!res.ok) {
-    throw new Error(`Spotify API error: ${res.status}`)
+    const body = await res.text().catch(() => '')
+    throw new Error(`Spotify API error on ${fullUrl}: ${res.status} ${body}`)
   }
   return res.status === 204 ? (null as T) : res.json()
 }

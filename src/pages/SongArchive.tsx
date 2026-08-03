@@ -96,6 +96,10 @@ export function SongArchive() {
         <p className="song-archive__sync-status">Syncing playlist…</p>
       )}
 
+      {isJoel && spotify.lastError && (
+        <p className="song-archive__error">Sync failed: {spotify.lastError}</p>
+      )}
+
       {showEmptyMessage && <p className="song-archive__empty">Nothing archived yet.</p>}
     </main>
   )

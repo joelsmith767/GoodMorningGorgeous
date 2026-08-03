@@ -38,6 +38,7 @@ export function useSpotifySync(enabled: boolean, chronologicalTrackIds: string[]
   const [connected, setConnected] = useState(false)
   const [playlistUrl, setPlaylistUrl] = useState<string | null>(null)
   const [syncing, setSyncing] = useState(false)
+  const [lastError, setLastError] = useState<string | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -71,6 +72,7 @@ export function useSpotifySync(enabled: boolean, chronologicalTrackIds: string[]
         }
 
         setSyncing(true)
+        setLastError(null)
         const { accessToken, refreshedAuth } = await getValidAccessToken(auth)
         if (refreshedAuth) {
           auth = refreshedAuth
@@ -95,8 +97,13 @@ export function useSpotifySync(enabled: boolean, chronologicalTrackIds: string[]
         if (missing.length > 0) {
           await addTracksToPlaylist(accessToken, playlistId, missing)
         }
-      } catch {
-        // Best-effort background sync — try again next visit.
+      } catch (error) {
+        // Best-effort background sync — try again next visit, but surface
+        // what happened so it's not a silent, unexplained no-op.
+        console.error('Spotify sync failed:', error)
+        if (!cancelled) {
+          setLastError(error instanceof Error ? error.message : String(error))
+        }
       } finally {
         if (!cancelled) {
           setSyncing(false)
@@ -114,5 +121,5 @@ export function useSpotifySync(enabled: boolean, chronologicalTrackIds: string[]
     startSpotifyAuth()
   }, [])
 
-  return { connected, playlistUrl, syncing, connect }
+  return { connected, playlistUrl, syncing, lastError, connect }
 }
