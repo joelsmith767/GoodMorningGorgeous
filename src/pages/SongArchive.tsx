@@ -12,11 +12,6 @@ import './SongArchive.css'
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000
 
-interface ArchivedDay {
-  dayKey: string
-  trackId: string
-}
-
 // Pure UTC calendar-date arithmetic — avoids the viewer's own machine
 // timezone, which would otherwise shift dates parsed as local midnight.
 function addDays(dayKey: string, days: number): string {
@@ -36,46 +31,42 @@ function countDaysBetween(startKey: string, endKey: string): number {
 // just replaying that same picker across every day that's actually been
 // revealed — capped by revealedCount (the same Firestore-backed counter the
 // pixel grid uses) rather than by today's date, so a song isn't added to the
-// archive or playlist before that day's reveal ritual has happened. Also
-// capped by real elapsed days, since the pixel grid's "reveal next (test)"
-// button can otherwise push revealedCount ahead of today. Returned
-// oldest-first, since that's the order the Spotify sync wants to insert in.
-function listArchivedDays(revealedCount: number): ArchivedDay[] {
+// playlist before that day's reveal ritual has happened. Also capped by real
+// elapsed days, since the pixel grid's "reveal next (test)" button can
+// otherwise push revealedCount ahead of today. Returned oldest-first, since
+// that's the order the Spotify sync wants to insert in.
+function listArchivedTrackIds(revealedCount: number): string[] {
   const startDate = TEST_START_DATE ?? pixelCalendarConfig.startDate
   const todayKey = getDayKeyInZone(REVEAL_RESET_TIME_ZONE)
   const daysElapsed = countDaysBetween(startDate, todayKey) + 1
   const revealedDays = Math.max(0, Math.min(revealedCount, daysElapsed))
 
-  const days: ArchivedDay[] = []
+  const trackIds: string[] = []
   for (let i = 0; i < revealedDays; i++) {
     const dayKey = addDays(startDate, i)
     // Noon UTC safely falls within the same Vancouver calendar day, so this
     // resolves back to dayKey regardless of the viewer's own timezone.
     const trackId = pickSongOfTheDay(songCatalog, getDayIndex(new Date(`${dayKey}T12:00:00Z`)))
     if (trackId) {
-      days.push({ dayKey, trackId })
+      trackIds.push(trackId)
     }
   }
 
-  return days
-}
-
-function formatDayLabel(dayKey: string): string {
-  const date = new Date(`${dayKey}T00:00:00`)
-  return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+  return trackIds
 }
 
 export function SongArchive() {
   const { user } = useAuth()
   const isJoel = user?.email !== REVEALER_EMAIL
   const pixelReveal = usePixelReveal()
-  const days = useMemo(
-    () => listArchivedDays(pixelReveal.revealedCount),
+  const trackIds = useMemo(
+    () => listArchivedTrackIds(pixelReveal.revealedCount),
     [pixelReveal.revealedCount],
   )
-  const trackIds = useMemo(() => days.map((day) => day.trackId), [days])
   const spotify = useSpotifySync(isJoel, trackIds)
-  const displayDays = useMemo(() => [...days].reverse(), [days])
+
+  const showConnectPrompt = isJoel && !spotify.connected
+  const showEmptyMessage = !spotify.playlistUrl && !showConnectPrompt
 
   return (
     <main className="song-archive">
@@ -91,11 +82,11 @@ export function SongArchive() {
           rel="noreferrer"
           className="song-archive__playlist-link"
         >
-          Listen to the whole playlist on Spotify →
+          Listen to the archive on Spotify →
         </a>
       )}
 
-      {isJoel && !spotify.connected && (
+      {showConnectPrompt && (
         <button type="button" className="song-archive__connect" onClick={spotify.connect}>
           Connect Spotify to auto-sync this playlist
         </button>
@@ -105,25 +96,7 @@ export function SongArchive() {
         <p className="song-archive__sync-status">Syncing playlist…</p>
       )}
 
-      {displayDays.length === 0 ? (
-        <p className="song-archive__empty">No songs yet.</p>
-      ) : (
-        <ul className="song-archive__list">
-          {displayDays.map(({ dayKey, trackId }) => (
-            <li key={dayKey} className="song-archive__item">
-              <span className="song-archive__date">{formatDayLabel(dayKey)}</span>
-              <a
-                href={`https://open.spotify.com/track/${trackId}`}
-                target="_blank"
-                rel="noreferrer"
-                className="song-archive__open"
-              >
-                Open in Spotify
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
+      {showEmptyMessage && <p className="song-archive__empty">Nothing archived yet.</p>}
     </main>
   )
 }

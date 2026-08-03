@@ -10,4 +10,9 @@ export const SPOTIFY_REDIRECT_URI = 'https://joelsmith767.github.io/hannahs-goin
 
 export const SPOTIFY_SCOPES = 'playlist-modify-private playlist-modify-public playlist-read-private'
 
+// Joel created this playlist himself (to control its name/cover/description),
+// so the sync uses it directly instead of auto-creating one. Set to null to
+// go back to auto-creating a playlist named SPOTIFY_PLAYLIST_NAME.
+export const SPOTIFY_PLAYLIST_ID: string | null = '4gEl5KSok1heaLGVBxKAtb'
+
 export const SPOTIFY_PLAYLIST_NAME = 'Song of the Day Archive'
