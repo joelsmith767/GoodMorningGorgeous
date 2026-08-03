@@ -8,8 +8,6 @@ export interface PixelCalendarProps {
   totalPixels: number
   revealedCount: number
   revealStepByCell: number[]
-  onRevealNext: () => void
-  onResetToToday: () => void
 }
 
 export function PixelCalendar({
@@ -18,8 +16,6 @@ export function PixelCalendar({
   totalPixels,
   revealedCount,
   revealStepByCell,
-  onRevealNext,
-  onResetToToday,
 }: PixelCalendarProps) {
   const { image } = pixelCalendarConfig
 
@@ -38,12 +34,6 @@ export function PixelCalendar({
         <p>
           {revealedCount} / {totalPixels} days revealed · {Math.round((revealedCount / totalPixels) * 100)}%
         </p>
-        <button type="button" onClick={onRevealNext} disabled={revealedCount >= totalPixels}>
-          Reveal next pixel (test)
-        </button>
-        <button type="button" onClick={onResetToToday}>
-          Reset to today
-        </button>
       </div>
     </div>
   )
