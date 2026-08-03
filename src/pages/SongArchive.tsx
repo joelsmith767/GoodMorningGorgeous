@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom'
+import { useMemo } from 'react'
+import { useAuth } from '../auth/AuthContext'
 import { songCatalog } from '../songs'
 import { getDayIndex, pickSongOfTheDay } from '../components/SongOfTheDay/songSelection'
 import { getDayKeyInZone } from '../lib/dayKey'
-import { REVEAL_RESET_TIME_ZONE, TEST_START_DATE } from '../components/DailyReveal/dailyRevealConfig'
+import { REVEALER_EMAIL, REVEAL_RESET_TIME_ZONE, TEST_START_DATE } from '../components/DailyReveal/dailyRevealConfig'
 import { pixelCalendarConfig } from '../components/PixelCalendar/config'
+import { useSpotifySync } from '../spotify/useSpotifySync'
 import './SongArchive.css'
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000
@@ -29,8 +32,9 @@ function countDaysBetween(startKey: string, endKey: string): number {
 }
 
 // Song selection is a pure function of the calendar date, so the archive is
-// just replaying that same picker across every day the ritual has run —
-// no separate "was this revealed" state needs to exist anywhere.
+// just replaying that same picker across every day the ritual has run — no
+// separate "was this revealed" state needs to exist anywhere. Returned
+// oldest-first, since that's the order the Spotify sync wants to insert in.
 function listArchivedDays(): ArchivedDay[] {
   const startDate = TEST_START_DATE ?? pixelCalendarConfig.startDate
   const todayKey = getDayKeyInZone(REVEAL_RESET_TIME_ZONE)
@@ -47,7 +51,7 @@ function listArchivedDays(): ArchivedDay[] {
     }
   }
 
-  return days.reverse()
+  return days
 }
 
 function formatDayLabel(dayKey: string): string {
@@ -56,7 +60,12 @@ function formatDayLabel(dayKey: string): string {
 }
 
 export function SongArchive() {
-  const days = listArchivedDays()
+  const { user } = useAuth()
+  const isJoel = user?.email !== REVEALER_EMAIL
+  const days = useMemo(() => listArchivedDays(), [])
+  const trackIds = useMemo(() => days.map((day) => day.trackId), [days])
+  const spotify = useSpotifySync(isJoel, trackIds)
+  const displayDays = useMemo(() => [...days].reverse(), [days])
 
   return (
     <main className="song-archive">
@@ -64,11 +73,33 @@ export function SongArchive() {
         ← Back
       </Link>
       <h1 className="song-archive__title">Past songs</h1>
-      {days.length === 0 ? (
+
+      {spotify.playlistUrl && (
+        <a
+          href={spotify.playlistUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="song-archive__playlist-link"
+        >
+          Listen to the whole playlist on Spotify →
+        </a>
+      )}
+
+      {isJoel && !spotify.connected && (
+        <button type="button" className="song-archive__connect" onClick={spotify.connect}>
+          Connect Spotify to auto-sync this playlist
+        </button>
+      )}
+
+      {isJoel && spotify.connected && spotify.syncing && (
+        <p className="song-archive__sync-status">Syncing playlist…</p>
+      )}
+
+      {displayDays.length === 0 ? (
         <p className="song-archive__empty">No songs yet.</p>
       ) : (
         <ul className="song-archive__list">
-          {days.map(({ dayKey, trackId }) => (
+          {displayDays.map(({ dayKey, trackId }) => (
             <li key={dayKey} className="song-archive__item">
               <span className="song-archive__date">{formatDayLabel(dayKey)}</span>
               <a
