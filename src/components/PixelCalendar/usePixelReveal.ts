@@ -73,11 +73,6 @@ export function usePixelReveal() {
     await setDoc(sharedStateDoc, { revealedCount: next }, { merge: true })
   }
 
-  const resetToToday = async () => {
-    setRevealedCount(daysElapsedToday)
-    await setDoc(sharedStateDoc, { revealedCount: daysElapsedToday }, { merge: true })
-  }
-
   const nextCellIndex = revealedCount < totalPixels ? revealOrder[revealedCount] : null
   const hasPendingReveal = revealedCount < daysElapsedToday
 
@@ -88,7 +83,6 @@ export function usePixelReveal() {
     revealedCount,
     revealStepByCell,
     revealNext,
-    resetToToday,
     nextCellIndex,
     hasPendingReveal,
     loading,

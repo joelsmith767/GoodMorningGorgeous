@@ -49,8 +49,6 @@ export function Home() {
           totalPixels={pixelReveal.totalPixels}
           revealedCount={pixelReveal.revealedCount}
           revealStepByCell={pixelReveal.revealStepByCell}
-          onRevealNext={pixelReveal.revealNext}
-          onResetToToday={pixelReveal.resetToToday}
         />
 
         {isRevealer ? (
