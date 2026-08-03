@@ -6,6 +6,7 @@ import { getDayIndex, pickSongOfTheDay } from '../components/SongOfTheDay/songSe
 import { getDayKeyInZone } from '../lib/dayKey'
 import { REVEALER_EMAIL, REVEAL_RESET_TIME_ZONE, TEST_START_DATE } from '../components/DailyReveal/dailyRevealConfig'
 import { pixelCalendarConfig } from '../components/PixelCalendar/config'
+import { usePixelReveal } from '../components/PixelCalendar/usePixelReveal'
 import { useSpotifySync } from '../spotify/useSpotifySync'
 import './SongArchive.css'
 
@@ -32,16 +33,21 @@ function countDaysBetween(startKey: string, endKey: string): number {
 }
 
 // Song selection is a pure function of the calendar date, so the archive is
-// just replaying that same picker across every day the ritual has run — no
-// separate "was this revealed" state needs to exist anywhere. Returned
+// just replaying that same picker across every day that's actually been
+// revealed — capped by revealedCount (the same Firestore-backed counter the
+// pixel grid uses) rather than by today's date, so a song isn't added to the
+// archive or playlist before that day's reveal ritual has happened. Also
+// capped by real elapsed days, since the pixel grid's "reveal next (test)"
+// button can otherwise push revealedCount ahead of today. Returned
 // oldest-first, since that's the order the Spotify sync wants to insert in.
-function listArchivedDays(): ArchivedDay[] {
+function listArchivedDays(revealedCount: number): ArchivedDay[] {
   const startDate = TEST_START_DATE ?? pixelCalendarConfig.startDate
   const todayKey = getDayKeyInZone(REVEAL_RESET_TIME_ZONE)
-  const totalDays = countDaysBetween(startDate, todayKey)
+  const daysElapsed = countDaysBetween(startDate, todayKey) + 1
+  const revealedDays = Math.max(0, Math.min(revealedCount, daysElapsed))
 
   const days: ArchivedDay[] = []
-  for (let i = 0; i <= totalDays; i++) {
+  for (let i = 0; i < revealedDays; i++) {
     const dayKey = addDays(startDate, i)
     // Noon UTC safely falls within the same Vancouver calendar day, so this
     // resolves back to dayKey regardless of the viewer's own timezone.
@@ -62,7 +68,11 @@ function formatDayLabel(dayKey: string): string {
 export function SongArchive() {
   const { user } = useAuth()
   const isJoel = user?.email !== REVEALER_EMAIL
-  const days = useMemo(() => listArchivedDays(), [])
+  const pixelReveal = usePixelReveal()
+  const days = useMemo(
+    () => listArchivedDays(pixelReveal.revealedCount),
+    [pixelReveal.revealedCount],
+  )
   const trackIds = useMemo(() => days.map((day) => day.trackId), [days])
   const spotify = useSpotifySync(isJoel, trackIds)
   const displayDays = useMemo(() => [...days].reverse(), [days])
