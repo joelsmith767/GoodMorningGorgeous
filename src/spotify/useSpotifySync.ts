@@ -7,7 +7,7 @@ import {
   getCurrentUserId,
   getPlaylistTrackIds,
 } from './spotifyApi'
-import { SPOTIFY_PLAYLIST_NAME } from './config'
+import { SPOTIFY_PLAYLIST_ID, SPOTIFY_PLAYLIST_NAME } from './config'
 
 const REFRESH_MARGIN_MS = 60_000
 
@@ -78,8 +78,12 @@ export function useSpotifySync(enabled: boolean, chronologicalTrackIds: string[]
 
         let playlistId = auth.playlistId
         if (!playlistId) {
-          const userId = await getCurrentUserId(accessToken)
-          playlistId = await createPlaylist(accessToken, userId, SPOTIFY_PLAYLIST_NAME)
+          if (SPOTIFY_PLAYLIST_ID) {
+            playlistId = SPOTIFY_PLAYLIST_ID
+          } else {
+            const userId = await getCurrentUserId(accessToken)
+            playlistId = await createPlaylist(accessToken, userId, SPOTIFY_PLAYLIST_NAME)
+          }
           await saveSpotifyAuth({ playlistId })
           if (!cancelled) {
             setPlaylistUrl(playlistUrlFor(playlistId))
