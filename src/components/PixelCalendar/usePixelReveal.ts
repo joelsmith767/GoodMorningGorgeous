@@ -50,12 +50,18 @@ export function usePixelReveal() {
 
   useEffect(() => {
     let cancelled = false
-    getDoc(sharedStateDoc).then((snapshot) => {
-      if (cancelled) return
-      const storedCount = snapshot.exists() ? (snapshot.data().revealedCount ?? 0) : 0
-      setRevealedCount(Math.min(storedCount, totalPixels))
-      setLoading(false)
-    })
+    getDoc(sharedStateDoc)
+      .then((snapshot) => {
+        if (cancelled) return
+        const storedCount = snapshot.exists() ? (snapshot.data().revealedCount ?? 0) : 0
+        setRevealedCount(Math.min(storedCount, totalPixels))
+      })
+      .catch(() => {
+        // Leave revealedCount at its current value; still stop loading below.
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
     return () => {
       cancelled = true
     }

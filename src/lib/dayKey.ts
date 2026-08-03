@@ -25,3 +25,15 @@ export function getDaysElapsedInZone(
   const todayLocalMidnight = new Date(`${todayKey}T00:00:00`)
   return Math.floor((todayLocalMidnight.getTime() - start.getTime()) / MS_PER_DAY) + 1
 }
+
+/** Whole days from "today" (in the given timezone) until targetDate. */
+export function getDaysUntilInZone(
+  targetDate: string,
+  timeZone: string,
+  referenceDate: Date = new Date(),
+): number {
+  const target = new Date(`${targetDate}T00:00:00`)
+  const todayKey = getDayKeyInZone(timeZone, referenceDate)
+  const todayLocalMidnight = new Date(`${todayKey}T00:00:00`)
+  return Math.ceil((target.getTime() - todayLocalMidnight.getTime()) / MS_PER_DAY)
+}
