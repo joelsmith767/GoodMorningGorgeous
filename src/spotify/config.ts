@@ -6,7 +6,7 @@ export const SPOTIFY_CLIENT_ID = '5bebec667e2c4e7ab83113af43fc292b'
 // Hardcoded (not derived from window.location) because the OAuth round-trip
 // can only work against the deployed site anyway — Spotify won't accept a
 // localhost redirect_uri that isn't separately registered.
-export const SPOTIFY_REDIRECT_URI = 'https://joelsmith767.github.io/hannahs-going-away-present/'
+export const SPOTIFY_REDIRECT_URI = 'https://joelsmith767.github.io/GoodMorningGorgeous/'
 
 export const SPOTIFY_SCOPES = 'playlist-modify-private playlist-modify-public playlist-read-private'
 
