@@ -1,0 +1,82 @@
+.farewell-message-trigger {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.farewell-message-overlay {
+  position: fixed;
+  inset: 0;
+  /* Sits above the daily reveal overlay (z-index: 100), so it always takes
+     visual priority if both ever happen to be open at once. */
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.75);
+  animation: farewell-message-fade-in 0.3s ease-out;
+}
+
+@keyframes farewell-message-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.farewell-message-modal {
+  position: relative;
+  max-width: 560px;
+  width: 100%;
+  max-height: 85vh;
+  overflow: auto;
+  padding: 3rem 2.5rem 2.5rem;
+  border-radius: 12px;
+  background: var(--panel);
+  border: 1px solid var(--accent);
+  color: var(--ink);
+  box-sizing: border-box;
+  animation: farewell-message-zoom-in 0.35s ease-out;
+}
+
+@keyframes farewell-message-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.farewell-message-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  font-size: 1.75rem;
+  line-height: 1;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.farewell-message-modal__text {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}

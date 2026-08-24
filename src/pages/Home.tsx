@@ -5,6 +5,7 @@ import { usePixelReveal } from '../components/PixelCalendar/usePixelReveal'
 import { pixelCalendarConfig } from '../components/PixelCalendar/config'
 import { DailyReveal } from '../components/DailyReveal/DailyReveal'
 import { REVEALER_EMAIL, REVEAL_RESET_TIME_ZONE } from '../components/DailyReveal/dailyRevealConfig'
+import { FarewellMessage } from '../components/FarewellMessage/FarewellMessage'
 import { DigitalClock } from '../components/DigitalClock/DigitalClock'
 import { getDistanceKm, estimateFlightHours } from '../lib/greatCircle'
 import { getDaysUntilInZone } from '../lib/dayKey'
@@ -61,18 +62,21 @@ export function Home() {
         />
 
         {isRevealer ? (
-          <DailyReveal
-            image={pixelCalendarConfig.image}
-            gridColumns={pixelReveal.gridColumns}
-            gridRows={pixelReveal.gridRows}
-            totalPixels={pixelReveal.totalPixels}
-            revealedCount={pixelReveal.revealedCount}
-            revealStepByCell={pixelReveal.revealStepByCell}
-            nextCellIndex={pixelReveal.nextCellIndex}
-            hasPendingReveal={pixelReveal.hasPendingReveal}
-            loading={pixelReveal.loading}
-            onRevealNext={pixelReveal.revealNext}
-          />
+          <div className="ritual-buttons">
+            <DailyReveal
+              image={pixelCalendarConfig.image}
+              gridColumns={pixelReveal.gridColumns}
+              gridRows={pixelReveal.gridRows}
+              totalPixels={pixelReveal.totalPixels}
+              revealedCount={pixelReveal.revealedCount}
+              revealStepByCell={pixelReveal.revealStepByCell}
+              nextCellIndex={pixelReveal.nextCellIndex}
+              hasPendingReveal={pixelReveal.hasPendingReveal}
+              loading={pixelReveal.loading}
+              onRevealNext={pixelReveal.revealNext}
+            />
+            <FarewellMessage />
+          </div>
         ) : (
           !pixelReveal.loading && (
             <p className="reveal-status">
