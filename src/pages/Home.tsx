@@ -61,8 +61,8 @@ export function Home() {
           onResetToToday={!isRevealer ? pixelReveal.resetToToday : undefined}
         />
 
-        {isRevealer ? (
-          <div className="ritual-buttons">
+        <div className="ritual-buttons">
+          {isRevealer ? (
             <DailyReveal
               image={pixelCalendarConfig.image}
               gridColumns={pixelReveal.gridColumns}
@@ -75,17 +75,17 @@ export function Home() {
               loading={pixelReveal.loading}
               onRevealNext={pixelReveal.revealNext}
             />
-            <FarewellMessage />
-          </div>
-        ) : (
-          !pixelReveal.loading && (
-            <p className="reveal-status">
-              {pixelReveal.hasPendingReveal
-                ? "Hannah hasn't revealed today's pixel yet"
-                : "Hannah's already revealed today's pixel"}
-            </p>
-          )
-        )}
+          ) : (
+            !pixelReveal.loading && (
+              <p className="reveal-status">
+                {pixelReveal.hasPendingReveal
+                  ? "Hannah hasn't revealed today's pixel yet"
+                  : "Hannah's already revealed today's pixel"}
+              </p>
+            )
+          )}
+          <FarewellMessage />
+        </div>
       </div>
     </main>
   )
