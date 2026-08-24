@@ -3,12 +3,11 @@
 //
 // Test batch for now — swap/add real picks whenever the catalog's ready.
 export const songCatalog: string[] = [
-  '6dGnYIeXmHdcikdzNNDMm2', // Here Comes The Sun - The Beatles
-  '66TsQdpn3KuBjuqAxyILRf', // Absurd
-  '5Bh8l8evdBSIoaK6EP1bWI', // Baby Driver
-  '25U7raB3ZSszayTYClh4hF', // Somewhere Over The Rainbow/What A Wonderful World - Israel Kamakawiwo'ole
-  '0RqHgwssXvp8y56PbHGp72', // Perfect - Ed Sheeran
-  '44AyOl4qVkzS48vBsbNXaC', // Can't Help Falling in Love - Elvis Presley
-  '3SdTKo2uVsxFblQjpScoHy', // Stand By Me - Ben E. King
-  '0FO30jIftsHXv8S3kMCbaN', // Sunflower - Post Malone, Swae Lee
+  '3obrfotpr4kLCKiOu2GZ4Q', // My Little Town
+  '3LtOmWpTXLhilL5odoKysR', // Getting Better
+  '5SXemxLERs0imkLpe4Aq8v', // In the Gallery
+  '66jruxDL4V1Xu1eDMh8TgJ', // Now and Then
+  '31VRF1NniiNoxYUCWG6es6', // Universal Credit
+  '4pAb87TmUdd9ed9bxl2717', // Kirikou Drill
+  '0UvZcEfpzVyx47QsRbjyBz', // El Apagon
 ]
