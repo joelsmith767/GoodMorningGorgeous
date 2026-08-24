@@ -1,6 +1,5 @@
-// The one account that performs the daily reveal ritual. Swapping this for
-// Hannah's real address later is just changing this one value.
-export const REVEALER_EMAIL = 'hannah@gmail.com'
+// The one account that performs the daily reveal ritual.
+export const REVEALER_EMAIL = 'hannah.bruere22@gmail.com'
 
 // Fixed reference clock for "is it a new day yet" — always Vancouver,
 // regardless of which account is looking at the site.
