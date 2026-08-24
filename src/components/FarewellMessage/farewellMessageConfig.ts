@@ -1,7 +1,9 @@
 // The one date the "Dear Hannah" button appears — Vancouver time, same
 // reference clock as the rest of the site. Outside this date, the button
 // doesn't render at all.
-export const FAREWELL_MESSAGE_DATE = '2026-08-25'
+// TEMPORARY for testing — must be switched back to '2026-08-25' before
+// Vancouver reaches midnight tonight.
+export const FAREWELL_MESSAGE_DATE = '2026-08-24'
 
 // Plain text — write it like a normal letter. Line breaks are preserved
 // exactly as typed (no markdown needed).
