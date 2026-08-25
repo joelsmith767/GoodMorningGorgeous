@@ -170,3 +170,15 @@ main {
   color: var(--muted);
   text-align: center;
 }
+
+.app-version {
+  position: fixed;
+  bottom: 0.6rem;
+  left: 0.75rem;
+  z-index: 10;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  opacity: 0.6;
+  pointer-events: none;
+}

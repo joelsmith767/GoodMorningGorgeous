@@ -32,20 +32,26 @@ function App() {
       })
   }, [user, navigate])
 
+  let content
   if (loading) {
-    return <main className="app-loading" />
-  }
-
-  if (!user) {
-    return <Login />
+    content = <main className="app-loading" />
+  } else if (!user) {
+    content = <Login />
+  } else {
+    content = (
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/city/:cityId" element={<CityDetail />} />
+        <Route path="/songs" element={<SongArchive />} />
+      </Routes>
+    )
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/city/:cityId" element={<CityDetail />} />
-      <Route path="/songs" element={<SongArchive />} />
-    </Routes>
+    <>
+      {content}
+      <span className="app-version">v1.0</span>
+    </>
   )
 }
 
