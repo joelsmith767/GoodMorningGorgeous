@@ -1,13 +1,12 @@
-import { getDayKeyInZone } from '../../lib/dayKey'
+import { getDaysElapsedInZone } from '../../lib/dayKey'
 import { REVEAL_RESET_TIME_ZONE } from '../DailyReveal/dailyRevealConfig'
+import { pixelCalendarConfig } from '../PixelCalendar/config'
 
-const MS_PER_DAY = 24 * 60 * 60 * 1000
-
-// Keyed off Vancouver's calendar day (same reference clock as the pixel
-// reveal gate) so it's the same song for both accounts, not per-viewer.
+// 0-indexed day count from the same Aug 25, 2026 start date the pixel
+// reveal uses (Vancouver time), so day one of the site picks the first
+// song in the catalog, day two picks the second, and so on.
 export function getDayIndex(date: Date = new Date()): number {
-  const dayKey = getDayKeyInZone(REVEAL_RESET_TIME_ZONE, date)
-  return Math.floor(new Date(`${dayKey}T00:00:00`).getTime() / MS_PER_DAY)
+  return getDaysElapsedInZone(pixelCalendarConfig.startDate, REVEAL_RESET_TIME_ZONE, date) - 1
 }
 
 /**

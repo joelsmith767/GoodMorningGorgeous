@@ -22,5 +22,5 @@ I know it was hard to leave, and it's scary. But what you're feeling right now, 
 
 And I promise you: everything important will be waiting for you when you get back. I know I can't be there physically, but this website is a gift to show you I'm still here. I don't need to be next to you to love you, I'll love you from the other side of the world if I have to. It's worth it.
 
-I love you so much, Hannah. I cannot wait to see you again. But for now, off you go, gorgeous. Have fun, and I'll see you soon ;) <3
+I love you so much, Hannah. You are the love of my life, the girl who stumbled into my world and changed everything without even trying. You are the one I dream of, the one I think of, the one I imagine, the one I crave, the one I love. I love you inside and out, from head to toe. I want to be with you all the time, to listen to you speak, to tell you all my thoughts, to give you all my love. I honestly cannot believe how much I love your tiny little French arse. You are the absolute love of my life. I cannot wait to see you again. But for now, off you go gorgeous, you’ve got an adventure to embark on. Have fun, and I'll see you soon ;) <3
 `.trim()
