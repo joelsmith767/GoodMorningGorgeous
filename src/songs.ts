@@ -10,4 +10,11 @@ export const songCatalog: string[] = [
   '31VRF1NniiNoxYUCWG6es6', // Universal Credit
   '4pAb87TmUdd9ed9bxl2717', // Kirikou Drill
   '0UvZcEfpzVyx47QsRbjyBz', // El Apagon
+  '42ocGQCOT0xYtV3f5kJDsD',
+  '0C80GCp0mMuBzLf3EAXqxv',
+  '0Rs55Q7MQy3fP45Ktw4P1n',
+  '7snQQk1zcKl8gZ92AnueZW',
+  '4DgPIFxoqkIVBvPqXtW2Fa',
+  '1mjhSyH5t3uFJWeuI0dxqx',
+  '5TDZyWDfbQFQJabbPwImVY',
 ]
