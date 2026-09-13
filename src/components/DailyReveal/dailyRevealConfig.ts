@@ -1,5 +1,13 @@
-// The one account that performs the daily reveal ritual.
-export const REVEALER_EMAIL = 'hannah.bruere22@gmail.com'
+// The one account that performs the daily reveal ritual. Mode-aware so the
+// staging environment (its own separate Firebase project/users) can exercise
+// the revealer view via a disposable test account instead of Hannah's real
+// email — update the staging value to match whatever test account you create
+// in the staging Firebase project's Auth console.
+const revealerEmailByMode: Record<string, string> = {
+  production: 'hannah.bruere22@gmail.com',
+  staging: 'hannah-test@gmail.com',
+}
+export const REVEALER_EMAIL = revealerEmailByMode[import.meta.env.MODE] ?? revealerEmailByMode.production
 
 // Fixed reference clock for "is it a new day yet" — always Vancouver,
 // regardless of which account is looking at the site.
