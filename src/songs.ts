@@ -31,4 +31,5 @@ export const songCatalog: string[] = [
   '2RKmGDTq840oLpKC0WOaCr',
   '6naxalmIoLFWR0siv8dnQQ',
   '2grjqo0Frpf2okIBiifQKs',
+  '2stkLJ0JNcXkIRDNF3ld6c',
 ]
